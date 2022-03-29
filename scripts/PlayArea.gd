@@ -1,6 +1,7 @@
 extends Spatial
 
 onready var getCam = $Rotation/Camera
+onready var getAI = $ArtificialIntelligence
 onready var getTimer = $Rotation/Camera/GameInformation/Timer
 onready var getTimerLabel = $Rotation/Camera/GameInformation/Timer/RTU
 onready var getTurnLabel = $Rotation/Camera/GameInformation/TCU
@@ -39,9 +40,11 @@ func validMove(held_object):
 		#wrong direction case
 		if currentPos[0] < held_object.get_X() || currentPos[2] == held_object.get_Y():
 			print("this move is invalid because you went in the wrong direction")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		elif currentPos[0] + (-held_object.get_X()) >= 4.5 || currentPos[2] - held_object.get_Y() >= 4.5 || (-currentPos[2]) + held_object.get_Y() >=4.5:
 			print("This move is too far")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		elif currentPos[0] + (-held_object.get_X()) >= 3.0:
 			var inbetween = grid_find(((currentPos + held_object.get_global_transform().origin)/2))
@@ -50,6 +53,7 @@ func validMove(held_object):
 				print("Blue piece in between")
 				return true
 			print("this move is invalid because it went too far")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		else:
 			print("this move is valid")
@@ -60,9 +64,11 @@ func validMove(held_object):
 		#wrong direction case
 		if currentPos[0] > held_object.get_X() || currentPos[2] == held_object.get_Y():
 			print("this move is invalid because you went in the wrong direction")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		elif (-currentPos[0]) + held_object.get_X() >= 4.5 || currentPos[2] - held_object.get_Y() >= 4.5 || (-currentPos[2]) + held_object.get_Y() >=4.5:
 			print("This move is too far")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		elif (-currentPos[0]) + held_object.get_X() >= 3.0:
 			var inbetween = grid_find(((currentPos + held_object.get_global_transform().origin)/2))
@@ -83,12 +89,14 @@ func kingValidMove(held_object):
 		#wrong direction case
 		if currentPos[2] == held_object.get_Y():
 			print("this move is invalid because you didn't move foward")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		elif ((currentPos[0] + (-held_object.get_X()) >= 4.5) || 
 			((-currentPos[0]) + held_object.get_X() >= 4.5) || 
 			currentPos[2] - held_object.get_Y() >= 4.5 || 
 			(-currentPos[2]) + held_object.get_Y() >=4.5):
 			print("This move is too far")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		elif (currentPos[0] + (-held_object.get_X()) >= 3.0) || ((-currentPos[0]) + held_object.get_X() >= 3.0):
 			var inbetween = grid_find(((currentPos + held_object.get_global_transform().origin)/2))
@@ -97,6 +105,7 @@ func kingValidMove(held_object):
 				print("Blue piece in between")
 				return true
 			print("this move is invalid because it went too far")
+			AudioManager.playSound("res://sounds/InvalidMove.wav")
 			return false
 		else:
 			print("this move is valid")
@@ -137,6 +146,8 @@ func _ready():
 		player_pieces.append(piece)
 	_intro()
 	yield(get_tree().create_timer(5.0), "timeout")
+	var musicPath = "res://music/" + ConfigController.music_selection + ".wav"
+	AudioManager.playMusic(musicPath)
 	#Stub for turn Timer, unfinished
 	if(turnTimer):
 		getTimer.start()
@@ -147,6 +158,7 @@ func _ready():
 	getTimerLabel.text = str(30)
 	P1removed = 0
 	P2removed = 0
+	AudioManager.playMusic("res://music/BraveHeart.wav")
 	
 func _on_pickable_clicked(object):
 	if !held_object:
@@ -180,6 +192,7 @@ func _unhandled_input(event):
 #	if event is InputEventKey and event.scancode == KEY_SPACE and not event.pressed:
 #		nextTurn()
 	if event is InputEventKey and event.scancode == KEY_ESCAPE and not event.pressed:
+		AudioManager.pauseMusic()
 		get_node("Rotation/Camera/Pause").visible = true
 
 #TaboutHandeling
