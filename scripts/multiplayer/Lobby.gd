@@ -19,6 +19,7 @@ func _process(delta):
 func _show_Lobby_ID(lobby_id):
 	getlabel.text = str(lobby_id)
 	getbutton.disabled = true
+	line.editable = false
 
 #Let the User know that the code doesn't work
 #Can be made to look nicer
