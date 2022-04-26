@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=1]
 [ext_resource path="res://fonts/TitleFont.tres" type="DynamicFont" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://scripts/FriendsPanel.gd" type="Script" id=14]
 [ext_resource path="res://scripts/FriendsRequestsPanel.gd" type="Script" id=15]
 [ext_resource path="res://images/singleplayer_menu_images/singleplayerbutton.tres" type="StyleBox" id=16]
+[ext_resource path="res://fonts/IngameFont.tres" type="DynamicFont" id=17]
 
 [sub_resource type="Theme" id=5]
 
@@ -1343,17 +1344,18 @@ __meta__ = {
 
 [node name="LoginRequestHandler" type="HTTPRequest" parent="UserPanels/LoginPanel"]
 
-[node name="PasswordEntry" type="TextEdit" parent="UserPanels/LoginPanel"]
-margin_left = 93.24
-margin_top = 77.9999
-margin_right = 288.24
-margin_bottom = 102.0
-
-[node name="UsernameEntry" type="TextEdit" parent="UserPanels/LoginPanel"]
+[node name="UsernameEntry" type="LineEdit" parent="UserPanels/LoginPanel"]
 margin_left = 93.24
 margin_top = 44.9999
 margin_right = 287.24
 margin_bottom = 68.9999
+
+[node name="PasswordEntry" type="LineEdit" parent="UserPanels/LoginPanel"]
+margin_left = 93.24
+margin_top = 77.9999
+margin_right = 288.24
+margin_bottom = 102.0
+secret = true
 
 [node name="PasswordLabel" type="RichTextLabel" parent="UserPanels/LoginPanel"]
 margin_left = 12.24
@@ -1524,7 +1526,7 @@ margin_right = -75.0
 margin_bottom = -20.0
 text = "Register new Account"
 
-[node name="UsernameEntry" type="TextEdit" parent="UserPanels/RegisterPanel"]
+[node name="UsernameEntry" type="LineEdit" parent="UserPanels/RegisterPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 140.0
@@ -1532,7 +1534,7 @@ margin_top = 45.0
 margin_right = -5.0
 margin_bottom = -185.0
 
-[node name="EPasswordEntry" type="TextEdit" parent="UserPanels/RegisterPanel"]
+[node name="EPasswordEntry" type="LineEdit" parent="UserPanels/RegisterPanel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1541,8 +1543,9 @@ margin_left = -210.24
 margin_top = -170.0
 margin_right = -5.23999
 margin_bottom = -150.0
+secret = true
 
-[node name="CPasswordEntry" type="TextEdit" parent="UserPanels/RegisterPanel"]
+[node name="CPasswordEntry" type="LineEdit" parent="UserPanels/RegisterPanel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1551,8 +1554,9 @@ margin_left = -210.24
 margin_top = -135.0
 margin_right = -5.23999
 margin_bottom = -115.0
+secret = true
 
-[node name="EmailEntry" type="TextEdit" parent="UserPanels/RegisterPanel"]
+[node name="EmailEntry" type="LineEdit" parent="UserPanels/RegisterPanel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1731,6 +1735,8 @@ margin_right = 27.0
 margin_bottom = 23.0
 texture_normal = ExtResource( 11 )
 
+[node name="FriendHandler" type="HTTPRequest" parent="UserPanels/FriendsPanel"]
+
 [node name="FriendsRequestsPanel" type="ColorRect" parent="UserPanels"]
 visible = false
 anchor_left = 1.008
@@ -1790,7 +1796,7 @@ margin_right = -91.0
 margin_bottom = -440.0
 text = "Friend Requests"
 
-[node name="LineEdit" type="LineEdit" parent="UserPanels/FriendsRequestsPanel"]
+[node name="AddFriendName" type="LineEdit" parent="UserPanels/FriendsRequestsPanel"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1816,6 +1822,8 @@ texture_normal = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FriendRequestHandler" type="HTTPRequest" parent="UserPanels/FriendsRequestsPanel"]
 
 [node name="DetailedProfilePanel" type="ColorRect" parent="UserPanels"]
 visible = false
@@ -1928,9 +1936,9 @@ __meta__ = {
 }
 
 [node name="EditDescriptionButton" type="Button" parent="UserPanels/DetailedProfilePanel"]
-margin_left = 442.118
+margin_left = 379.118
 margin_top = 301.0
-margin_right = 563.118
+margin_right = 500.118
 margin_bottom = 321.0
 text = "Edit Description"
 __meta__ = {
@@ -1938,7 +1946,6 @@ __meta__ = {
 }
 
 [node name="SaveDescriptionButton" type="Button" parent="UserPanels/DetailedProfilePanel"]
-visible = false
 margin_left = 512.0
 margin_top = 301.0
 margin_right = 563.0
@@ -1965,8 +1972,8 @@ window_title = "Open a File"
 resizable = true
 mode = 0
 access = 2
-current_dir = "/School/Courses/Junior/Semester 2/ICSI 418Y/Class Project"
-current_path = "/School/Courses/Junior/Semester 2/ICSI 418Y/Class Project/"
+current_dir = "/Users/JM/Documents/Git/icsi418y-group7-checkers"
+current_path = "/Users/JM/Documents/Git/icsi418y-group7-checkers/"
 
 [node name="UploadPhoto" type="Button" parent="UserPanels/DetailedProfilePanel"]
 margin_left = 12.118
@@ -1976,6 +1983,36 @@ margin_bottom = 126.0
 text = "Upload Profile Picture"
 
 [node name="UploadProfilePicture" type="HTTPRequest" parent="UserPanels/DetailedProfilePanel"]
+
+[node name="WinsLabel" type="RichTextLabel" parent="UserPanels/DetailedProfilePanel"]
+margin_left = 115.0
+margin_top = 50.0
+margin_right = 154.0
+margin_bottom = 67.0
+custom_fonts/normal_font = ExtResource( 17 )
+text = "Wins:"
+
+[node name="LossesLabel" type="RichTextLabel" parent="UserPanels/DetailedProfilePanel"]
+margin_left = 115.118
+margin_top = 68.0
+margin_right = 175.118
+margin_bottom = 86.0
+custom_fonts/normal_font = ExtResource( 17 )
+text = "Losses:"
+
+[node name="WinNumber" type="Label" parent="UserPanels/DetailedProfilePanel"]
+margin_left = 150.118
+margin_top = 52.0
+margin_right = 160.118
+margin_bottom = 66.0
+text = "0"
+
+[node name="LossNumber" type="Label" parent="UserPanels/DetailedProfilePanel"]
+margin_left = 160.118
+margin_top = 70.0
+margin_right = 170.118
+margin_bottom = 84.0
+text = "0"
 
 [node name="MenuAnimator" type="Node2D" parent="."]
 position = Vector2( 777, 430 )
@@ -1999,6 +2036,8 @@ anims/shrinkRegister = SubResource( 9 )
 [connection signal="pressed" from="VBoxContainer/How to Play" to="." method="_on_HowTo_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
 [connection signal="pressed" from="UserPanels/AccountPanel/AccountButton" to="." method="_on_AccountButton_pressed"]
+[connection signal="updatedUser" from="UserPanels/LoginPanel" to="UserPanels/FriendsPanel" method="_on_LoginPanel_updatedUser"]
+[connection signal="updatedUser" from="UserPanels/LoginPanel" to="UserPanels/FriendsRequestsPanel" method="_on_LoginPanel_updatedUser"]
 [connection signal="request_completed" from="UserPanels/LoginPanel/LoginRequestHandler" to="UserPanels/LoginPanel" method="_on_LoginRequestHandler_request_completed"]
 [connection signal="pressed" from="UserPanels/LoginPanel/LoginButton" to="UserPanels/LoginPanel" method="_on_LoginButton_pressed"]
 [connection signal="pressed" from="UserPanels/LoginPanel/RegisterButton" to="." method="_on_RegisterButton_pressed"]
@@ -2010,7 +2049,14 @@ anims/shrinkRegister = SubResource( 9 )
 [connection signal="pressed" from="UserPanels/ProfilePanel/FriendsButton" to="." method="_on_FriendsButton_pressed"]
 [connection signal="pressed" from="UserPanels/FriendsPanel/exitFriendsButton" to="." method="_on_exitFriendsButton_pressed"]
 [connection signal="pressed" from="UserPanels/FriendsPanel/FriendRequests" to="." method="_on_FriendRequests_pressed"]
+[connection signal="request_completed" from="UserPanels/FriendsPanel/FriendHandler" to="UserPanels/FriendsPanel" method="_on_FriendHandler_request_completed"]
 [connection signal="pressed" from="UserPanels/FriendsRequestsPanel/exitFriendRequestButton" to="." method="_on_exitFriendRequestButton_pressed"]
+[connection signal="pressed" from="UserPanels/FriendsRequestsPanel/AddFriendButton" to="UserPanels/FriendsRequestsPanel" method="_on_AddFriendButton_pressed"]
+[connection signal="request_completed" from="UserPanels/FriendsRequestsPanel/FriendRequestHandler" to="UserPanels/FriendsRequestsPanel" method="_on_FriendRequestHandler_request_completed"]
+[connection signal="visibility_changed" from="UserPanels/DetailedProfilePanel" to="UserPanels/DetailedProfilePanel" method="_on_DetailedProfilePanel_visibility_changed"]
 [connection signal="pressed" from="UserPanels/DetailedProfilePanel/ReturnToProfile" to="." method="_on_ReturnToProfile_pressed"]
 [connection signal="pressed" from="UserPanels/DetailedProfilePanel/EditDescriptionButton" to="UserPanels/DetailedProfilePanel" method="_on_EditDescriptionButton_pressed"]
 [connection signal="pressed" from="UserPanels/DetailedProfilePanel/SaveDescriptionButton" to="UserPanels/DetailedProfilePanel" method="_on_SaveDescriptionButton_pressed"]
+[connection signal="file_selected" from="UserPanels/DetailedProfilePanel/FileSelection" to="UserPanels/DetailedProfilePanel" method="_on_FileSelection_file_selected"]
+[connection signal="pressed" from="UserPanels/DetailedProfilePanel/UploadPhoto" to="UserPanels/DetailedProfilePanel" method="_on_UploadPhoto_pressed"]
+[connection signal="request_completed" from="UserPanels/DetailedProfilePanel/UploadProfilePicture" to="UserPanels/DetailedProfilePanel" method="_on_UploadProfilePicture_request_completed"]
